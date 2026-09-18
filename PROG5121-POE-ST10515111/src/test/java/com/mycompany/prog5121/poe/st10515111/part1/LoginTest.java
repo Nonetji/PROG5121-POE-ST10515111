@@ -5,93 +5,92 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
 
-    // 4.
-    // Test if username is correctly formatted
+    // --- USERNAME TESTS ---
+
     @Test
     public void testUsernameCorrectlyFormatted() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.username = "kyl_1";
-        
-        assertTrue(checker.checkUserName(), "Username containing underscore and <= 5 chars should return true.");
+        assertTrue(checker.checkUserName("kyl_1"), 
+                "Username correctly formatted with underscore and length <= 5");
     }
 
-    // Test if username is incorrectly formatted
     @Test
     public void testUsernameIncorrectlyFormatted() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.username = "kyle!!!!!!";
-        
-        assertFalse(checker.checkUserName(), "Username exceeding 5 chars should return false.");
+        assertFalse(checker.checkUserName("kyle!!!!!!"), 
+                "Username improperly formatted");
     }
 
-    // Test if password meets complexity requirements
+    // --- PASSWORD TESTS ---
+
     @Test
     public void testPasswordMeetsComplexity() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.password = "Ch&&secke99!";
-        
-        assertTrue(checker.checkPasswordComplexity(), "Password meeting complexity requirements should return true.");
+        assertTrue(checker.checkPasswordComplexity("Ch&&secke99!"), 
+                "Password meets all complexity requirements");
     }
 
-    // Test if password does not meet complexity requirements
     @Test
     public void testPasswordFailsComplexity() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.password = "password";
-        
-        assertFalse(checker.checkPasswordComplexity(), "Simple password without numbers/specials should return false.");
+        assertFalse(checker.checkPasswordComplexity("password"), 
+                "Password does not meet complexity requirements");
     }
 
-    // Test if cell phone number is Correctly Formatted
+    // --- PHONE NUMBER TESTS ---
+
     @Test
     public void testCellPhoneNumberCorrectlyFormatted() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.cellNumber = "+27838968976";
-        
-        assertTrue(checker.checkCellPhoneNumber(), "Cell number starting with +27 and 9 trailing digits should return true.");
+        assertTrue(checker.checkCellPhoneNumber("+27838968976"), 
+                "Cell phone number formatted correctly");
     }
 
-    // Test if cell phone number is incorrectly formatted
     @Test
     public void testCellPhoneNumberIncorrectlyFormatted() {
         RegistrationChecker checker = new RegistrationChecker();
-        checker.cellNumber = "08966553";
-        
-        assertFalse(checker.checkCellPhoneNumber(), "Cell number missing +27 international prefix should return false.");
+        assertFalse(checker.checkCellPhoneNumber("08966553"), 
+                "Cell phone number improperly formatted");
     }
 
-    // Test for registration success
+    // --- REGISTRATION TESTS ---
+
     @Test
     public void testRegisterUserSuccess() {
         Login login = new Login();
-        String result = login.registerUser("kyl_1", "Ch&&secke99!", "+27838968976", "Kyle", "Smith");
+        String actual = login.registerUser("kyl_1", "Ch&&secke99!", "+27838968976", "Kyle", "Smith");
+        String expected = "User registered successfully.";
         
-        assertEquals("User registered successfully.", result);
+        assertEquals(expected, actual, "Registration response string must match expected success message.");
     }
 
-    // Test for login success
+    // --- LOGIN TESTS ---
+
     @Test
     public void testLoginUserSuccess() {
         Login login = new Login();
         login.registerUser("kyl_1", "Ch&&secke99!", "+27838968976", "Kyle", "Smith");
 
         boolean isAuthenticated = login.loginUser("kyl_1", "Ch&&secke99!");
-        assertTrue(isAuthenticated, "Matching login details should authenticate successfully.");
+        assertTrue(isAuthenticated, "Login should succeed with correct credentials.");
 
         String actualStatus = login.returnLoginStatus("kyl_1", "Ch&&secke99!");
-        assertEquals("Welcome back kyl_1", actualStatus);
+        String expectedStatus = "Welcome back Kyle, Smith it is great to see you again.";
+        
+        assertEquals(expectedStatus, actualStatus, "Login status message must match required format.");
     }
 
-    // Test for login failure
     @Test
     public void testLoginUserFailure() {
         Login login = new Login();
         login.registerUser("kyl_1", "Ch&&secke99!", "+27838968976", "Kyle", "Smith");
 
         boolean isAuthenticated = login.loginUser("wrong_user", "wrong_pass");
-        assertFalse(isAuthenticated, "Incorrect login details should fail authentication.");
+        assertFalse(isAuthenticated, "Login should fail with incorrect credentials.");
 
         String actualStatus = login.returnLoginStatus("wrong_user", "wrong_pass");
-        assertEquals("Username or password incorrect, please try again.", actualStatus);
+        String expectedStatus = "Username or password incorrect, please try again.";
+        
+        assertEquals(expectedStatus, actualStatus, "Login status message must match required failure string.");
     }
 }

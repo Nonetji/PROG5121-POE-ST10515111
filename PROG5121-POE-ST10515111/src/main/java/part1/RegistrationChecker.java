@@ -2,19 +2,13 @@ package com.mycompany.prog5121.poe.st10515111.part1;
 
 public class RegistrationChecker {
 
-    // 1.a.
-    // Declare variables prior to method implementations
-    public String username;
-    public String password;
-    public String cellNumber;
-
-    // method checks if username contains underscore and if length <= 5
-    public boolean checkUserName() {
+    // Method checks if username contains underscore and if length <= 5
+    public boolean checkUserName(String username) {
         return username != null && username.contains("_") && username.length() <= 5;
     }
 
-    // method checks if password complexity rules are met
-    public boolean checkPasswordComplexity() {
+    // Method checks if password complexity rules are met
+    public boolean checkPasswordComplexity(String password) {
         if (password == null || password.length() < 8) {
             return false;
         }
@@ -26,10 +20,8 @@ public class RegistrationChecker {
         return hasCapital && hasNumber && hasSpecial;
     }
 
-    // 1.b.
-    // method checks if cell number requirements are met
-    // Reference/Attribution: Regular expression pattern adapted from standard E.164 international phone number format criteria.
-    public boolean checkCellPhoneNumber() {
+    // Method checks if cell number requirements are met
+    public boolean checkCellPhoneNumber(String cellNumber) {
         if (cellNumber == null) {
             return false;
         }

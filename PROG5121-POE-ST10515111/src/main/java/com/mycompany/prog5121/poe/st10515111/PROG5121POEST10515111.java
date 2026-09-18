@@ -1,84 +1,67 @@
 package com.mycompany.prog5121.poe.st10515111;
 
-// linking main file with Login.java
 import com.mycompany.prog5121.poe.st10515111.part1.Login;
-
-// import java
 import java.util.Scanner;
 
 public class PROG5121POEST10515111 {
 
-    // 3.
-    // Main method handling user inputs and application workflow
     public static void main(String[] args) {
 
-        // Scanner collecting user inputs
-        Scanner userInput = new Scanner(System.in);
         Login authSystem = new Login();
 
-        // Declaring variables
-        String firstName;
-        String lastName;
-        String username;
-        String password;
-        String cellNumber;
-        String registrationOutput;
-        String loginUsername;
-        String loginPassword;
-        String loginOutput;
+        try (Scanner userInput = new Scanner(System.in)) {
 
-        // Registration Prompts
-        do {
-            System.out.println("USER REGISTRATION");
+            String registrationOutput;
 
-            System.out.print("Enter your first name: ");
-            firstName = userInput.nextLine();
+            // Registration Prompts Loop
+            do {
+                System.out.println("USER REGISTRATION");
 
-            System.out.print("Enter your last name: ");
-            lastName = userInput.nextLine();
+                System.out.print("Enter your first name: ");
+                String firstName = userInput.nextLine();
 
-            System.out.print("Enter username: ");
-            username = userInput.nextLine();
+                System.out.print("Enter your last name: ");
+                String lastName = userInput.nextLine();
 
-            System.out.print("Create a password: ");
-            password = userInput.nextLine();
+                System.out.print("Enter username: ");
+                String username = userInput.nextLine();
 
-            System.out.print("Enter your cellphone number (+27...): ");
-            cellNumber = userInput.nextLine();
+                System.out.print("Create a password: ");
+                String password = userInput.nextLine();
 
-            registrationOutput = authSystem.registerUser(
-                    username,
-                    password,
-                    cellNumber,
-                    firstName,
-                    lastName
-            );
+                System.out.print("Enter your cellphone number (+27...): ");
+                String cellNumber = userInput.nextLine();
 
-            System.out.println(registrationOutput);
+                registrationOutput = authSystem.registerUser(
+                        username,
+                        password,
+                        cellNumber,
+                        firstName,
+                        lastName
+                );
 
-        } 
-        
-        while (!registrationOutput.equals("User registered successfully."));
+                System.out.println(registrationOutput);
 
-        // Login Prompts
-        do {
-            System.out.println("USER LOGIN");
+            } while (!registrationOutput.equals("User registered successfully."));
 
-            System.out.print("Enter Username: ");
-            loginUsername = userInput.nextLine();
+            boolean isAuthenticated;
 
-            System.out.print("Enter your Password: ");
-            loginPassword = userInput.nextLine();
+            // Login Prompts Loop
+            do {
+                System.out.println("USER LOGIN");
 
-            loginOutput = authSystem.returnLoginStatus(
-                    loginUsername,
-                    loginPassword
-            );
+                System.out.print("Enter Username: ");
+                String loginUsername = userInput.nextLine();
 
-            System.out.println(loginOutput);
+                System.out.print("Enter your Password: ");
+                String loginPassword = userInput.nextLine();
 
-        } 
-        
-        while (loginOutput.equals("Username or password incorrect, please try again."));
+                isAuthenticated = authSystem.loginUser(loginUsername, loginPassword);
+                String loginOutput = authSystem.returnLoginStatus(loginUsername, loginPassword);
+
+                System.out.println(loginOutput);
+
+            } while (!isAuthenticated);
+        }
     }
 }
