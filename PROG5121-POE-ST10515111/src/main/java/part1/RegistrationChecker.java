@@ -4,9 +4,9 @@ public class RegistrationChecker {
 
     // 1.a.
     // Declare variables prior to method implementations
-    String username;
-    String password;
-    String cellNumber;
+    public String username;
+    public String password;
+    public String cellNumber;
 
     // method checks if username contains underscore and if length <= 5
     public boolean checkUserName() {
