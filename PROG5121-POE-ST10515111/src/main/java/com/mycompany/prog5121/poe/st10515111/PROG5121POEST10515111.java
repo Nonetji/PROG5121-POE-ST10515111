@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 public class PROG5121POEST10515111 {
 
-    // 3. 
+    // 3.
     // Main method handling user inputs and application workflow
     public static void main(String[] args) {
-        
+
         // Scanner collecting user inputs
         Scanner userInput = new Scanner(System.in);
         Login authSystem = new Login();
@@ -28,36 +28,57 @@ public class PROG5121POEST10515111 {
         String loginOutput;
 
         // Registration Prompts
-        System.out.println("=== USER REGISTRATION ===");
-        System.out.print("Enter First Name: ");
-        firstName = userInput.nextLine();
+        do {
+            System.out.println("USER REGISTRATION");
 
-        System.out.print("Enter Last Name: ");
-        lastName = userInput.nextLine();
+            System.out.print("Enter your first name: ");
+            firstName = userInput.nextLine();
 
-        System.out.print("Enter Username: ");
-        username = userInput.nextLine();
+            System.out.print("Enter your last name: ");
+            lastName = userInput.nextLine();
 
-        System.out.print("Enter Password: ");
-        password = userInput.nextLine();
+            System.out.print("Enter username: ");
+            username = userInput.nextLine();
 
-        System.out.print("Enter Cell Phone (+27...): ");
-        cellNumber = userInput.nextLine();
+            System.out.print("Create a password: ");
+            password = userInput.nextLine();
 
-        registrationOutput = authSystem.registerUser(username, password, cellNumber, firstName, lastName);
-        System.out.println("\n" + registrationOutput);
+            System.out.print("Enter your cellphone number (+27...): ");
+            cellNumber = userInput.nextLine();
+
+            registrationOutput = authSystem.registerUser(
+                    username,
+                    password,
+                    cellNumber,
+                    firstName,
+                    lastName
+            );
+
+            System.out.println(registrationOutput);
+
+        } 
+        
+        while (!registrationOutput.equals("User registered successfully."));
 
         // Login Prompts
-        System.out.println("\n=== USER LOGIN ===");
-        System.out.print("Enter Username: ");
-        loginUsername = userInput.nextLine();
+        do {
+            System.out.println("USER LOGIN");
 
-        System.out.print("Enter Password: ");
-        loginPassword = userInput.nextLine();
+            System.out.print("Enter Username: ");
+            loginUsername = userInput.nextLine();
 
-        loginOutput = authSystem.returnLoginStatus(loginUsername, loginPassword);
-        System.out.println("\n" + loginOutput);
+            System.out.print("Enter your Password: ");
+            loginPassword = userInput.nextLine();
 
-        userInput.close();
+            loginOutput = authSystem.returnLoginStatus(
+                    loginUsername,
+                    loginPassword
+            );
+
+            System.out.println(loginOutput);
+
+        } 
+        
+        while (loginOutput.equals("Username or password incorrect, please try again."));
     }
 }
