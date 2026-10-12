@@ -1,14 +1,19 @@
 package com.mycompany.prog5121.poe.st10515111;
 
+// Imports the Login class from the part1 package
 import com.mycompany.prog5121.poe.st10515111.part1.Login;
+
+// Imports Scanner
 import java.util.Scanner;
 
 public class PROG5121POEST10515111 {
 
     public static void main(String[] args) {
-
+        
+        // user input is stored in variable 
         Login authSystem = new Login();
 
+        // try instantiates scanner
         try (Scanner userInput = new Scanner(System.in)) {
 
             String registrationOutput;
