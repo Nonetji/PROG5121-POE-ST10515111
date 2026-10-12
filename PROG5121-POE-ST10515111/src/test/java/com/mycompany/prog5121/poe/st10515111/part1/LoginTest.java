@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
 
-    // --- USERNAME TESTS ---
+    // USERNAME TESTS 
 
     @Test
     public void testUsernameCorrectlyFormatted() {
@@ -21,7 +21,7 @@ public class LoginTest {
                 "Username improperly formatted");
     }
 
-    // --- PASSWORD TESTS ---
+    // PASSWORD TESTS 
 
     @Test
     public void testPasswordMeetsComplexity() {
@@ -37,7 +37,7 @@ public class LoginTest {
                 "Password does not meet complexity requirements");
     }
 
-    // --- PHONE NUMBER TESTS ---
+    // PHONE NUMBER TESTS 
 
     @Test
     public void testCellPhoneNumberCorrectlyFormatted() {
@@ -53,7 +53,7 @@ public class LoginTest {
                 "Cell phone number improperly formatted");
     }
 
-    // --- REGISTRATION TESTS ---
+    // REGISTRATION TESTS
 
     @Test
     public void testRegisterUserSuccess() {
@@ -64,7 +64,7 @@ public class LoginTest {
         assertEquals(expected, actual, "Registration response string must match expected success message.");
     }
 
-    // --- LOGIN TESTS ---
+    // LOGIN TESTS
 
     @Test
     public void testLoginUserSuccess() {
