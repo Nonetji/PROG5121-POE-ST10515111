@@ -1,5 +1,7 @@
 package com.mycompany.prog5121.poe.st10515111.part1;
 
+import part1.RegistrationChecker;
+import part1.Login;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
