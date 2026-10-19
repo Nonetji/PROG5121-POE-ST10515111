@@ -1,4 +1,4 @@
-package com.mycompany.prog5121.poe.st10515111.part1;
+package part1;
 
 public class Login {
 
@@ -11,10 +11,7 @@ public class Login {
     private final RegistrationChecker checker = new RegistrationChecker();
 
     public boolean loginUser(String usernameInput, String passwordInput) {
-        return username != null 
-                && password != null 
-                && username.equals(usernameInput) 
-                && password.equals(passwordInput);
+        return username != null && password != null && username.equals(usernameInput) && password.equals(passwordInput);
     }
 
     public String returnLoginStatus(String usernameInput, String passwordInput) {
