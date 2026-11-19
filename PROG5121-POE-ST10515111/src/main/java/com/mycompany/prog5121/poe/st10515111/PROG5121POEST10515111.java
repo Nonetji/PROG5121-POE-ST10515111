@@ -4,6 +4,9 @@ package com.mycompany.prog5121.poe.st10515111;
 import part1.Login;
 // imports message class
 import part2.Message;
+// imports the part 3 arrays/features and the stored messages menu
+import part3.MessageManager;
+import part3.StoredMessagesMenu;
 
 // imports Scanner
 import java.util.Scanner;
@@ -70,6 +73,9 @@ public class PROG5121POEST10515111 {
             // the user sets, once, how many messages they will enter in this run of the application
             int numberOfMessages = askNumberOfMessages(userInput);
 
+            // holds the sent / disregarded / stored / hash / ID arrays (sender is the logged-in user)
+            MessageManager manager = new MessageManager(authSystem.getFirstName() + " " + authSystem.getLastName() + " (" + authSystem.getCellphoneNumber() + ")");
+
             // uses array to retain each message created during the run
             Message[] messages = new Message[numberOfMessages];
             boolean messagesEntered = false;
@@ -83,6 +89,7 @@ public class PROG5121POEST10515111 {
                 System.out.println("1. Send Messages");
                 System.out.println("2. Coming Soon.");
                 System.out.println("3. Quit");
+                System.out.println("4. Stored Messages");
 
                 System.out.print("Choose an option: ");
                 String menuChoice = userInput.nextLine().trim();
@@ -93,7 +100,7 @@ public class PROG5121POEST10515111 {
                         if (messagesEntered) {
                             System.out.println("You have already entered all " + numberOfMessages + " of your messages.");
                         } else {
-                            sendMessages(userInput, messages);
+                            sendMessages(userInput, messages, manager);
                             messagesEntered = true;
                         }
                         break;
@@ -111,8 +118,13 @@ public class PROG5121POEST10515111 {
                         System.out.println("Thank you for using QuickChat.");
                         break;
 
+                    // stored messages features
+                    case "4":
+                        StoredMessagesMenu.run(userInput, manager);
+                        break;
+
                     default:
-                        System.out.println("Invalid menu option. Please enter 1, 2, or 3.");
+                        System.out.println("Invalid menu option. Please enter 1, 2, 3, or 4.");
                 }
             }
         }
@@ -147,7 +159,7 @@ public class PROG5121POEST10515111 {
     }
 
     // collects every message in the set quantity & processes each one in order
-    private static void sendMessages(Scanner userInput, Message[] messages) {
+    private static void sendMessages(Scanner userInput, Message[] messages, MessageManager manager) {
 
         for (int i = 0; i < messages.length; i++) {
 
@@ -216,6 +228,15 @@ public class PROG5121POEST10515111 {
 
             System.out.println(status);
 
+            // puts the message into the matching array
+            if ("Message successfully sent.".equals(status)) {
+                manager.addSent(messages[i]);
+            } else if ("Press 0 to delete the message.".equals(status)) {
+                manager.addDisregarded(messages[i]);
+            } else if ("Message successfully stored.".equals(status)) {
+                manager.addStored(messages[i]);
+            }
+
             // a disregarded message is deleted when the user presses 0
             if ("Press 0 to delete the message.".equals(status)) {
 
@@ -245,4 +266,3 @@ public class PROG5121POEST10515111 {
         System.out.println("Total messages sent: " + Message.getTotalMessagesSent());
     }
 }
- 
