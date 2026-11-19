@@ -44,4 +44,21 @@ public class Login {
 
         return "User registered successfully.";
     }
+
+    // getters used by later parts of the app
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCellphoneNumber() {
+        return cellphoneNumber;
+    }
 }

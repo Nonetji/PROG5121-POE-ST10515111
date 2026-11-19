@@ -236,11 +236,17 @@ public class Message {
         return actionStatus;
     }
 
+    // builds this message's JSON object text (one entry of the storage array)
+    private String toJson() {
+
+        return "  {" + "\"messageID\":\"" + escapeJson(messageID) + "\"," + "\"messageNumber\":" + messageNumber + "," + "\"recipient\":\"" + escapeJson(recipient) + "\"," + "\"message\":\"" + escapeJson(messageText) + "\"," + "\"messageHash\":\"" + escapeJson(messageHash) + "\"" + "}";
+    }
+
     // appends the message to JSON array in the storage file
     public void storeMessage() {
 
         Path file = storageFile;
-        String jsonObject = "  {" + "\"messageID\":\"" + escapeJson(messageID) + "\"," + "\"messageNumber\":" + messageNumber + "," + "\"recipient\":\"" + escapeJson(recipient) + "\"," + "\"message\":\"" + escapeJson(messageText) + "\"," + "\"messageHash\":\"" + escapeJson(messageHash) + "\"" + "}";
+        String jsonObject = toJson();
 
         try {
             String existing = Files.exists(file) ? new String(Files.readAllBytes(file), StandardCharsets.UTF_8).trim() : "";
@@ -259,6 +265,24 @@ public class Message {
         catch (IOException exception) {
             System.out.println("The message could not be stored: " + exception.getMessage());
         }
+    }
+
+    // replaces the contents of the storage file with exactly these messages (used after a stored message is deleted)
+    public static void writeStoredMessages(List<Message> messages) throws IOException {
+
+        StringBuilder json = new StringBuilder("[");
+
+        for (int i = 0; i < messages.size(); i++) {
+            json.append(System.lineSeparator()).append(messages.get(i).toJson());
+
+            if (i < messages.size() - 1) {
+                json.append(",");
+            }
+        }
+
+        json.append(System.lineSeparator()).append("]");
+
+        Files.write(storageFile, json.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     // escapes characters that could otherwise break the JSON structure
@@ -317,6 +341,12 @@ public class Message {
     public static void setStorageFile(Path file) {
 
         storageFile = file;
+    }
+
+    // returns the file that stored messages are written to
+    public static Path getStorageFile() {
+
+        return storageFile;
     }
 
     // returns the messages the user chose to disregard (read-only view)
